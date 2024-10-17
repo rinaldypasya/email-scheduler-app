@@ -31,5 +31,5 @@ def new_email():
     )
 
 @pytest.fixture
-def mock_celery_schedule_email_task(mocker):
-    return mocker.patch('app.tasks.schedule_email_task.delay')
+def mock_celery_send_email_task(mocker):
+    return mocker.patch('app.tasks.send_email_task.delay')

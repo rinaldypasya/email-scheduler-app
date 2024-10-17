@@ -4,10 +4,8 @@ build:
 down:
 	docker-compose down
 
-rebuild:
-	docker-compose down
-	docker-compose build
-	docker-compose up
+celery-beat:
+	docker-compose up celery-beat
 
 migrate-init:
 	docker-compose run web flask db init
@@ -28,3 +26,8 @@ test:
 
 dependencies:
 	pip3 install --no-cache-dir -r requirements.txt
+
+rebuild:
+	make down
+	make build
+	migrate-upgrade
