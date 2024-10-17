@@ -16,20 +16,26 @@ make dependencies
 ```
 email_scheduler/
 ├── app/
+│   ├── static/
+│   ├── templates/
 │   ├── __init__.py
+│   ├── email_utils.py
 │   ├── models.py
 │   ├── routes.py
-│   ├── email_sender.py
-│   ├── static/
-│   └── templates/
+│   └── tasks.py
 ├── migrations/
-├── Dockerfile
-├── docker-compose.yml
-├── config.py
-├── Makefile
-├── README.md
+├── tests/
+│   ├── conftest.py
+│   └── test_email_scheduling.py
 ├── .gitignore
-└── requirements.txt
+├── config.py
+├── docker-compose.yml
+├── Dockerfile
+├── Makefile
+├── pytest.ini
+├── README.md
+├── requirements.txt
+└── run.py
 ```
 
 ## Running the app
@@ -85,8 +91,9 @@ make test
 Please access `http://localhost:8080` 
 
 - You can try via GUI
+<img width="1206" alt="Screenshot 2024-10-18 at 12 40 13 AM" src="https://github.com/user-attachments/assets/6eda3a92-15ce-4653-9c1b-b7192e6fd174">
 
-- Or API via Postman to create schedule email
+- Or hit API via cURL to create schedule email
 ```
 curl --location 'http://localhost:8080/api/save_emails' \
 --header 'Content-Type: application/json' \
