@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Email</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<email_content>
+    <div class="container">
+        <h1>Schedule a New Email</h1>
+        <form method="POST">
+            <label for="recipients">Recipient Emails (comma-separated):</label>
+            <input type="text" id="recipients" name="recipients" placeholder="Enter emails, separated by commas" required>
+
+            <label for="email_subject">Event ID:</label>
+            <input type="number" id="event_id" name="event_id" required>
+
+            <label for="email_subject">Subject:</label>
+            <input type="text" id="email_subject" name="email_subject" required>
+
+            <label for="email_content">Message Body:</label>
+            <textarea id="email_content" name="email_content" required></textarea>
+
+            <label for="timestamp">Scheduled Time (YYYY-MM-DD HH:MM:SS):</label>
+            <input type="text" id="timestamp" name="timestamp" required>
+
+            <label for="timezone">Timezone (Auto-detected):</label>
+            <input type="text" id="timezone" name="timezone" value="Asia/Singapore" required disabled>
+
+            <input type="submit" class="btn" value="Schedule Email">
+        </form>
+        <a href="{{ url_for('main.index') }}">Back to Schedule Email List</a>
+    </div>
+
+    <!-- Automatically fill the timezone using JavaScript -->
+    <script>
+        document.getElementById('timezone').value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    </script>
+</email_content>
+</html>
