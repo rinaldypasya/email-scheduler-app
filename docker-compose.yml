@@ -11,6 +11,8 @@ services:
       DATABASE_URI: postgresql://postgres:password@db:5432/email_scheduler
       DEFAULT_TIMEZONE: Asia/Singapore
       REDIS_URI: redis://redis:6379/0
+      EMAIL_SENDER: your-email@example.com
+      EMAIL_PASSWORD: email-secret
     depends_on:
       - db
 
