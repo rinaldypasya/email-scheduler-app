@@ -3,7 +3,7 @@ from datetime import datetime
 import json
 import pytz
 
-def test_schedule_email(test_client, new_email, mock_celery_schedule_email_task):
+def test_schedule_email(test_client, new_email, mock_celery_send_email_task):
     """
     Test that scheduling an email works and that the Celery task is triggered.
     """
@@ -30,7 +30,7 @@ def test_schedule_email(test_client, new_email, mock_celery_schedule_email_task)
     assert scheduled_email.email_subject == new_email.email_subject
 
     # Assert - Celery task was triggered
-    mock_celery_schedule_email_task.assert_called_once_with(scheduled_email)
+    mock_celery_send_email_task.assert_called_once_with(scheduled_email.id)
 
 
 def test_send_email_task(test_client, new_email, mocker):
@@ -48,7 +48,7 @@ def test_send_email_task(test_client, new_email, mocker):
     mock_send_email = mocker.patch('app.email_utils.send_email')
 
     # Act - Trigger the task manually
-    send_email_task(new_email)
+    send_email_task(new_email.id)
 
     # Assert - Check if the email was marked as sent
     sent_email = ScheduledEmail.query.get(new_email.id)
@@ -58,7 +58,7 @@ def test_send_email_task(test_client, new_email, mocker):
     mock_send_email.assert_called_once()
 
 
-def test_send_scheduled_emails(test_client, new_email, mock_celery_schedule_email_task):
+def test_send_scheduled_emails(test_client, new_email, mock_celery_send_email_task):
     """
     Test the periodic task that triggers the sending task.
     """
@@ -71,8 +71,8 @@ def test_send_scheduled_emails(test_client, new_email, mock_celery_schedule_emai
     db.session.commit()
 
     # Act - Run the periodic task
-    schedule_email_task(new_email)
+    schedule_email_task()
 
     # Assert - Celery task for sending the email is triggered
     scheduled_email = ScheduledEmail.query.first()
-    mock_celery_schedule_email_task.assert_called_once_with(scheduled_email)
+    mock_celery_send_email_task.assert_called_once_with(scheduled_email.id)

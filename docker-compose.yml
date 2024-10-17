@@ -35,5 +35,14 @@ services:
       - redis
       - db
 
+  celery-beat:
+    build: .
+    command: celery -A app.tasks beat --loglevel=info
+    depends_on:
+      - redis
+      - db
+    volumes:
+      - ./celerybeat-schedule:/app/celerybeat-schedule  # Save schedule state
+
 volumes:
   postgres_data:

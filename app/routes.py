@@ -3,7 +3,7 @@ from .models import ScheduledEmail, db
 from datetime import datetime
 import pytz
 from email_validator import validate_email, EmailNotValidError
-from app.tasks import schedule_email_task
+from app.tasks import send_email_task
 
 bp = Blueprint('main', __name__)
 
@@ -50,7 +50,7 @@ def save_emails():
         db.session.add(new_email)
         db.session.commit()
         
-        schedule_email_task.apply_async((new_email,), eta=timestamp_tz)
+        send_email_task.apply_async((new_email.id,), eta=timestamp_tz)
 
         return redirect(url_for('main.index'))
     return render_template('save_emails.html')
@@ -85,6 +85,6 @@ def api_save_emails():
     db.session.add(new_email)
     db.session.commit()
     
-    schedule_email_task.apply_async((new_email,), eta=timestamp_tz)
+    send_email_task.apply_async((new_email.id,), eta=timestamp_tz)
 
     return jsonify({"message": "Email scheduled successfully!"}), 201

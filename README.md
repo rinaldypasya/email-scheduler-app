@@ -48,6 +48,11 @@ To shutdown the application, run:
 make down
 ```
 
+To start Celery Beat *(if not already running)*:
+```
+make celery-beat
+```
+
 ## Running the migration
 To init migration, run:
 ```
@@ -80,16 +85,17 @@ make test
 Please access `http://localhost:8080` 
 
 - You can try via GUI
+
 - Or API via Postman to create schedule email
-    ```
-    curl --location 'http://localhost:8080/api/save_emails' \
-    --header 'Content-Type: application/json' \
-    --data-raw '{
-        "recipients": "hi@local.com, hello@local.com",
-        "event_id": 1,
-        "email_subject": "Schedule Email",
-        "email_content": "This is schedule email content",
-        "timestamp": "2024-10-17 15:00:00",
-        "timezone": "Asia/Singapore"
-    }'
-    ```
+```
+curl --location 'http://localhost:8080/api/save_emails' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "recipients": "hi@local.com, hello@local.com",
+    "event_id": 1,
+    "email_subject": "Schedule Email",
+    "email_content": "This is schedule email content",
+    "timestamp": "2024-10-17 15:00:00",
+    "timezone": "Asia/Singapore"
+}'
+```
