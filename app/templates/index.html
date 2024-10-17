@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Scheduler</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<email_content>
+    <div class="container">
+        <h1>Email Scheduler</h1>
+        <a href="{{ url_for('main.save_emails') }}" class="btn">Schedule New Email</a>
+        <h2>Scheduled Emails</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Event ID</div>
+                    <th>Recipient</th>
+                    <th>Subject</th>
+                    <th>Scheduled Time</th>
+                </tr>
+            </thead>
+            <temail_content>
+                {% for email in emails %}
+                <tr>
+                    <td>{{ email.event_id }}</td>
+                    <td>{{ email.recipients }}</td>
+                    <td>{{ email.email_subject }}</td>
+                    <td>{{ email.timestamp }}</td>
+                </tr>
+                {% endfor %}
+            </temail_content>
+        </table>
+    </div>
+</email_content>
+</html>
